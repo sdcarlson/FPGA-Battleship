@@ -1,13 +1,16 @@
-#Introduction 
+# Introduction 
+
 The objective of this final project was to implement a classic game of Battleship on a Field-Programmable Gate Array (FPGA), specifically using a Basys3 board. This project aims to bring the strategic, grid-based gameplay of Battleship into the realm of digital hardware design. Our goal is to not only create a playable version of Battleship but also to integrate visual components using a VGA display, thereby enhancing the user experience.
 
-#Design Description
+# Design Description
+
 All arrays are sized 36 bits, with row major order.
 Cursor: 36 bit array where a single 1 bit determines the current spot of the cursor (all other bits should be 0)
 Ship Location Array: 36 bit array where 1 bits determines the current spots occupied by a ship.
 Coloring Array (grid state array): 36 bit array where 1 bits determine where the player has attacked so far on the board.
 
-##VGA Display Module
+## VGA Display Module
+
 With a 25 Mhz clock generated from a mod-4 counter, we cycle through every pixel in a 640 x 480 screen space and update their 3 corresponding 4-bit RGB values individually through some if conditionals. To prevent a “stretched” look of the 6 x 6 grid we had envisioned, we captured pixel updates only on a 480 x 480 grid, with the remaining parts of the screen blacked out. For a 6 x 6 grid, this meant that squares representing spots on the grid will have 80 x 80 dimensions, and with some division to the 480 x 480 grid layout, we can easily determine the current spot at any given area in the board. We update the correct pixel colors that occupy the given spot which is determined by conditionals that consider a ships location array (ship positions on the board), coloring array (player attacks on the board), and cursor array (current cursor position on the board).
 ##Seven Segment Module
 Handles translating the seven segment signal to display win/loss notifications on the seven segment display (has correct bit sequence for cathode/anode configuration). Default case is closing all seven segments on the display (no win/loss end condition detected yet).
